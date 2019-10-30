@@ -5,9 +5,36 @@ public class Ahorcado {
 
 	// Método que comprueba que la partida se ha terminado
 	// O pierdo las vidas o gano la partida
-	public static boolean partidaTerminada() {
-		boolean terminado = false;
-
+	public static boolean ganarPartida(String vHuecos[]) {
+		boolean terminado = true;
+		
+		for(int i=0;i<vHuecos.length;i++) {
+			if(vHuecos[i].equals("_")) {
+				terminado = false;
+				break;
+			}
+		}
+		
+		
+		if(terminado) {
+			System.out.println("Has ganado");
+		}
+		return terminado;
+	}
+	
+	public static boolean perderPartida(String vFallos[]) {
+		boolean terminado = true;
+		
+		for(int i=0;i<vFallos.length;i++) {
+			if(vFallos[i]==null) {
+			terminado = false;
+			break;
+		}
+		}
+		if(terminado) {
+			System.out.println("Has perdido");
+		}
+		
 		return terminado;
 	}
 
@@ -152,20 +179,32 @@ public class Ahorcado {
 		
 	}
 	
+	
+	
 	//Pregunta la letra y actualiza los vectores
 	//Si se encuentra actualiza vHuecos
 	//Si fallo actualiza vFallos
 	public static void preguntarLetra(String vHuecos[], String vSolucion[], String vFallos[]) {
 		Scanner leer = new Scanner(System.in);
 		String letra ="";
-		System.out.println("Dime una letra");
-		letra = leer.nextLine();
-		
-		for(int i=0;i<vSolucion.length;i++) {
-			if() {
-				
+			System.out.println("Dime una letra");
+			letra = leer.nextLine();
+			boolean encontrado = false;
+			
+			for(int i=0;i<vSolucion.length;i++) {
+				if(letra.equalsIgnoreCase(vSolucion[i])) {
+					vHuecos[i] = letra;
+					encontrado = true;
+				}
 			}
-		}
+			if(!encontrado) {
+				for (int i = 0; i < vFallos.length; i++) {
+					if(vFallos[i]!=null) {
+						vFallos[i] = letra;
+						break;
+					}
+				}
+			}
 		
 	}
 
@@ -178,12 +217,17 @@ public class Ahorcado {
 		vFallos = new String[6];
 		vHuecos = new String[palabraSolucion.length()];
 		vSolucion = new String[palabraSolucion.length()];
+		
+		System.out.println("* * * * * * * * * *");
+		System.out.println("JUEGO DEL AHORCADO");
+		System.out.println("* * * * * * * * * *");
+
 		inicializarVectores(vHuecos, vSolucion, palabraSolucion);
 
 		do {
-			pintaMuñeco(vFallos,vHuecos);
 			preguntarLetra(vHuecos, vSolucion, vFallos);
-		} while (partidaTerminada());
+			pintaMuñeco(vFallos,vHuecos);
+		} while (!ganarPartida(vHuecos) && !perderPartida(vFallos));
 
 	}
 
