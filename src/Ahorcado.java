@@ -1,4 +1,5 @@
 
+import java.util.Random;
 import java.util.Scanner;
 
 public class Ahorcado {
@@ -199,7 +200,7 @@ public class Ahorcado {
 			}
 			if(!encontrado) {
 				for (int i = 0; i < vFallos.length; i++) {
-					if(vFallos[i]!=null) {
+					if(vFallos[i]==null) {
 						vFallos[i] = letra;
 						break;
 					}
@@ -207,22 +208,28 @@ public class Ahorcado {
 			}
 		
 	}
+	public static String aleatorio() {
+		String[] lista = {"ORDENADOR", "TECLADO", "RATON", "MOVIL", "MONITOR", "MOCHILA", "SILLA", "MESA"};
+		Random azar = new Random();
+		
+		return lista[azar.nextInt(7)];
+	}
 
 	public static void main(String[] args) {
-		String palabraSolucion = "HOLA";
+		String aleatorias = aleatorio(); 
 		String vFallos[], vSolucion[], vHuecos[];
 		Scanner leer = new Scanner(System.in);
 
 		// Tamaño 6 porque son 6 vidas máximo
 		vFallos = new String[6];
-		vHuecos = new String[palabraSolucion.length()];
-		vSolucion = new String[palabraSolucion.length()];
+		vHuecos = new String[aleatorias.length()];
+		vSolucion = new String[aleatorias.length()];
 		
 		System.out.println("* * * * * * * * * *");
 		System.out.println("JUEGO DEL AHORCADO");
 		System.out.println("* * * * * * * * * *");
 
-		inicializarVectores(vHuecos, vSolucion, palabraSolucion);
+		inicializarVectores(vHuecos, vSolucion, aleatorias);
 
 		do {
 			preguntarLetra(vHuecos, vSolucion, vFallos);
